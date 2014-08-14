@@ -1,5 +1,6 @@
 // # Ghost Configuration
 // Setup your Ghost install for various environments
+// Documentation can be found at http://support.ghost.org/config/
 
 var path = require('path'),
     config;
@@ -11,19 +12,19 @@ config = {
         url: 'http://gavindraper.com',
 
         // Example mail config
-        // Visit http://docs.ghost.org/mail for instructions
-
-        mail: {
-            transport: 'SMTP',
-            options: {
-                service: 'Gmail',
-                auth: {
-                    user: 'gavdraper', // mailgun username
-                    pass: 'v1428vqe'  // mailgun password
-                }
-            }
-        },
-
+        // Visit http://support.ghost.org/mail for instructions
+        // ```
+        //  mail: {
+        //      transport: 'SMTP',
+        //      options: {
+        //          service: 'Mailgun',
+        //          auth: {
+        //              user: '', // mailgun username
+        //              pass: ''  // mailgun password
+        //          }
+        //      }
+        //  },
+        // ```
 
         database: {
             client: 'sqlite3',
@@ -36,7 +37,10 @@ config = {
             // Host to be passed to node's `net.Server#listen()`
             host: '127.0.0.1',
             // Port to be passed to node's `net.Server#listen()`, for iisnode set this to `process.env.PORT`
-            port: process.env.PORT
+            port: process.env.PORT || 1337
+        },
+        paths: {
+            contentPath: path.join(__dirname, '/content/')
         }
     },
 
@@ -45,16 +49,7 @@ config = {
     // Configure your URL and mail settings here
     production: {
         url: 'http://gavindraper.com',
-        mail: {
-            transport: 'SMTP',
-            options: {
-                service: 'Gmail',
-                auth: {
-                    user: 'gavdraper', // mailgun username
-                    pass: 'v1428vqe'  // mailgun password
-                }
-            }
-        },
+        mail: {},
         database: {
             client: 'sqlite3',
             connection: {
@@ -66,7 +61,7 @@ config = {
             // Host to be passed to node's `net.Server#listen()`
             host: '127.0.0.1',
             // Port to be passed to node's `net.Server#listen()`, for iisnode set this to `process.env.PORT`
-            port: process.env.PORT
+            port: process.env.PORT || 1337
         }
     },
 
@@ -86,43 +81,50 @@ config = {
         server: {
             host: '127.0.0.1',
             port: '2369'
-        }
-    },
-
-    // ### Travis
-    // Automated testing run through GitHub
-    'travis-sqlite3': {
-        url: 'http://127.0.0.1:2369',
-        database: {
-            client: 'sqlite3',
-            connection: {
-                filename: path.join(__dirname, '/content/data/ghost-travis.db')
-            }
         },
-        server: {
-            host: '127.0.0.1',
-            port: '2369'
-        }
+        logging: false
     },
 
-    // ### Travis
-    // Automated testing run through GitHub
-    'travis-mysql': {
+    // ### Testing MySQL
+    // Used by Travis - Automated testing run through GitHub
+    'testing-mysql': {
         url: 'http://127.0.0.1:2369',
         database: {
             client: 'mysql',
             connection: {
                 host     : '127.0.0.1',
-                user     : 'travis',
+                user     : 'root',
                 password : '',
-                database : 'ghost_travis',
+                database : 'ghost_testing',
                 charset  : 'utf8'
             }
         },
         server: {
             host: '127.0.0.1',
             port: '2369'
-        }
+        },
+        logging: false
+    },
+
+    // ### Testing pg
+    // Used by Travis - Automated testing run through GitHub
+    'testing-pg': {
+        url: 'http://127.0.0.1:2369',
+        database: {
+            client: 'pg',
+            connection: {
+                host     : '127.0.0.1',
+                user     : 'postgres',
+                password : '',
+                database : 'ghost_testing',
+                charset  : 'utf8'
+            }
+        },
+        server: {
+            host: '127.0.0.1',
+            port: '2369'
+        },
+        logging: false
     }
 };
 
