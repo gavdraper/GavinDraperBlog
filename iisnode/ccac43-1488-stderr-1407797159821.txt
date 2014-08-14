@@ -1,0 +1,6 @@
+[31m
+ERROR:[39m [31mEmail Error: Invalid login - 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8 http://support.google.com/mail/bin/answer.py?answer=14257 f6sm4729531wja.25 - gsmtp[39m
+[37mUnable to send welcome email, your blog will continue to function.[39m
+[32mPlease see http://docs.ghost.org/mail/ for instructions on configuring email.[39m
+
